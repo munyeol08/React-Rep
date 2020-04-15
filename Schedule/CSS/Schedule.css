@@ -1,0 +1,111 @@
+@charset "UTF-8";
+body {
+  background: #efefef; }
+
+.wrap-schedule {
+  width: 80%;
+  max-width: 50rem;
+  height: 35rem;
+  margin: 5rem auto 0;
+  background: #fff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+
+.wrap-schedule .top-section {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 130px;
+  background: #22b8cf; }
+
+.wrap-schedule .top-section .title {
+  padding: 39px 0;
+  color: #fff;
+  font-size: 2.5rem;
+  margin: 0;
+  text-align: center; }
+
+.wrap-schedule .form-section {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #22b8cf; }
+
+.wrap-schedule .form-section .input-schedule {
+  flex: 1;
+  font-size: 13px;
+  outline: none;
+  border: none;
+  padding: 5px 10px;
+  border-bottom: 1px solid #c5f6fa; }
+
+.wrap-schedule .form-section .create-button {
+  margin-left: 12px;
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  border-radius: 3px;
+  background: #22b8cf;
+  border: none;
+  color: #fff;
+  outline: none;
+  cursor: pointer; }
+
+.wrap-schedule .form-section .create-button:hover {
+  background: #3bc9db; }
+
+.wrap-schedule .schedule-list {
+  position: relative;
+  padding: 15px 10px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 332px; }
+
+.wrap-schedule .schedule-list .list-remove {
+  margin-right: 13px;
+  font-size: 16px;
+  font-weight: 800;
+  color: #22b8cf; }
+
+.wrap-schedule .schedule-list .list-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  height: 23px;
+  user-select: none;
+  font-size: 13px;
+  border-bottom: 1px solid #efefef;
+  padding: 10px 5px; }
+
+.wrap-schedule .schedule-list .list-item .list-contents {
+  flex: 1;
+  font-size: inherit;
+  word-break: break-all; }
+
+.wrap-schedule .schedule-list .list-item .check-mark {
+  line-height: 1rem;
+  margin-left: 1rem;
+  color: #3bc9db;
+  font-size: 14px;
+  font-weight: 800; }
+
+.wrap-schedule .schedule-list .list-item .checked {
+  color: #adb5bd;
+  text-decoration: line-through; }
+
+::-webkit-scrollbar {
+  width: 6px;
+  /* 세로축 스크롤바 길이 */ }
+
+::-webkit-scrollbar-track {
+  background-color: lightblue; }
+
+::-webkit-scrollbar-track-piece {
+  background-color: #fff; }
+
+::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background-color: #22b8cf; }
+
+::-webkit-scrollbar-button:start,
+::-webkit-scrollbar-button:end {
+  display: none; }
