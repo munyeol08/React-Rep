@@ -2,25 +2,55 @@ import React, { Component } from 'react';
 import '../CSS/CustomAlert.css';
 import { render, unmountComponentAtNode } from 'react-dom';
 
-export default class CustomAlert extends Component {
+class CustomAlert extends Component {
+  static defaultProps = {
+    buttons: [
+      { label: '확인', onClick: () => null },
+      { label: '취소', onClick: () => null },
+    ],
+    closeOnEscape: true,
+  };
+
   close = () => {
-    closeAlert();
+    removeBodyClass();
+    removeAlertElement();
+  };
+
+  handdleClickButton = (button) => {
+    if (button.onClick) button.onClick();
+    this.close();
+  };
+
+  keyboardClose = (event) => {
+    const { closeOnEscape } = this.props;
+    const isKeyCodeEscape = event.keyCode === 27;
+
+    if (closeOnEscape && isKeyCodeEscape) {
+      this.close();
+    }
+  };
+
+  componentDidMount = () => {
+    document.addEventListener('keydown', this.keyboardClose, false);
+  };
+
+  componentWillUnmount = () => {
+    document.removeEventListener('keydown', this.keyboardClose, false);
   };
 
   render() {
+    const { message, buttons } = this.props;
     return (
       <div className="custom-alert-wrap">
         <div className="custom-alert-wrap-inner">
-          <div className="custom-alert-message">
-            삭제 하시겠습니까?
-            <br />
-          </div>
+          <div className="custom-alert-message">{message}</div>
           <div className="custom-alert-buttons">
-            <button onClick={() => this.close()}>
-              확인
-            </button>
-            <button>취소</button>
-            <button>기본</button>
+            {buttons &&
+              buttons.map((button, i) => (
+                <button key={i} onClick={() => this.handdleClickButton(button)}>
+                  {button.label}
+                </button>
+              ))}
           </div>
         </div>
       </div>
@@ -34,21 +64,19 @@ function createBulrElement() {
   document.body.appendChild(blurElement);
 }
 
-function createAlertElement() {
-  let divTarget = document.getElementById(
-    'custom-alert-body-blur'
-  );
+function createAlertElement(properties) {
+  let divTarget = document.getElementById('custom-alert-body-blur');
+
   if (divTarget) {
-    render(<CustomAlert />, divTarget);
+    render(<CustomAlert {...properties} />, divTarget);
   } else {
+    createBulrElement();
+    createAlertElement(properties);
   }
 }
 
-function closeAlert() {
-  document.body.classList.remove('class-custom-alert-body');
-  const target = document.getElementById(
-    'custom-alert-body-blur'
-  );
+function removeAlertElement() {
+  const target = document.getElementById('custom-alert-body-blur');
 
   if (target) {
     unmountComponentAtNode(target);
@@ -56,12 +84,16 @@ function closeAlert() {
   }
 }
 
-function addAlertClass() {
+function addBodyClass() {
   document.body.classList.add('class-custom-alert-body');
 }
 
-export function customAlert() {
-  addAlertClass();
+function removeBodyClass() {
+  document.body.classList.remove('class-custom-alert-body');
+}
+
+export function customAlert(properties) {
+  addBodyClass();
   createBulrElement();
-  createAlertElement();
+  createAlertElement(properties);
 }

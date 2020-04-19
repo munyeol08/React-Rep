@@ -54,9 +54,7 @@ class Schedule extends Component {
 
   handleToggle = (id) => {
     const { schedules } = this.state;
-    const index = schedules.findIndex(
-      (schedule) => schedule.id === id
-    );
+    const index = schedules.findIndex((schedule) => schedule.id === id);
     const selected = schedules[index];
     const nextSchedule = [...schedules];
 
@@ -71,24 +69,25 @@ class Schedule extends Component {
   };
 
   handleRemove = (id) => {
-    customAlert();
-
-    const { schedules } = this.state;
-    this.setState({
-      schedules: schedules.filter(
-        (schedule) => schedule.id !== id
-      ),
+    customAlert({
+      message: '삭제 하시겠습니까?',
+      buttons: [
+        {
+          label: '확인',
+          onClick: () => {
+            const { schedules } = this.state;
+            this.setState({
+              schedules: schedules.filter((schedule) => schedule.id !== id),
+            });
+          },
+        },
+        { label: '취소', onClick: () => null },
+      ],
     });
   };
 
   render() {
-    const {
-      handleChange,
-      handleKeyPress,
-      handleCreate,
-      handleToggle,
-      handleRemove,
-    } = this;
+    const { handleChange, handleKeyPress, handleCreate, handleToggle, handleRemove } = this;
     const { inputValue, schedules } = this.state;
 
     return (
@@ -98,26 +97,14 @@ class Schedule extends Component {
         </div>
 
         <div className="form-section">
-          <input
-            className="input-schedule"
-            value={inputValue}
-            onChange={handleChange}
-            onKeyPress={handleKeyPress}
-          />
-          <button
-            className="create-button"
-            onClick={handleCreate}
-          >
+          <input className="input-schedule" value={inputValue} onChange={handleChange} onKeyPress={handleKeyPress} />
+          <button className="create-button" onClick={handleCreate}>
             추가
           </button>
         </div>
 
         <div className="schedule-list">
-          <ScheduleList
-            schedules={schedules}
-            handleToggle={handleToggle}
-            handleRemove={handleRemove}
-          />
+          <ScheduleList schedules={schedules} handleToggle={handleToggle} handleRemove={handleRemove} />
         </div>
       </div>
     );
