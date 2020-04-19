@@ -10,8 +10,7 @@ body {
   height: 35rem;
   margin: 5rem auto 0;
   background: #fff;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),
-    0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 
   .top-section {
     padding: 0;
@@ -83,6 +82,9 @@ body {
       font-size: 13px;
       border-bottom: 1px solid #efefef;
       padding: 10px 5px;
+      &:hover {
+        border-bottom: 1px solid #cdcdcd;
+      }
 
       .list-contents {
         flex: 1;

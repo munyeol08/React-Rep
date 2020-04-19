@@ -76,6 +76,9 @@ body {
   border-bottom: 1px solid #efefef;
   padding: 10px 5px; }
 
+.wrap-schedule .schedule-list .list-item:hover {
+  border-bottom: 1px solid #cdcdcd; }
+
 .wrap-schedule .schedule-list .list-item .list-contents {
   flex: 1;
   font-size: inherit;
