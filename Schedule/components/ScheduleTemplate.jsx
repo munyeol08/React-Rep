@@ -13,19 +13,24 @@ class Schedule extends Component {
       {
         id: 1,
         contents: '리액트 공부',
+        color: '#000',
         checked: true,
       },
       {
         id: 2,
         contents: '자바스립트 심화',
+        color: '#8A2BE2',
         checked: false,
       },
       {
         id: 3,
         contents: 'Webpack, Babel',
+        color: '#7FFF00',
         checked: false,
       },
     ],
+    colors: ['#000', '#7FFF00', '#8A2BE2', '#FF0000'],
+    selectedColor: '#000',
   };
 
   handleChange = (e) => {
@@ -41,15 +46,22 @@ class Schedule extends Component {
   };
 
   handleCreate = () => {
-    const { inputValue, schedules } = this.state;
+    const { inputValue, schedules, selectedColor } = this.state;
+
+    if (!inputValue) return;
+
     this.setState({
       inputValue: '',
       schedules: schedules.concat({
         id: this.id++,
         contents: inputValue,
+        color: selectedColor,
         checked: false,
       }),
     });
+
+    // var scrollObj = document.getElementsByClassName('schedule-list')[0];
+    // scrollObj.scrollTop = scrollObj.scrollHeight;
   };
 
   handleToggle = (id) => {
@@ -86,25 +98,58 @@ class Schedule extends Component {
     });
   };
 
+  handleSelectColor = (color) => {
+    this.setState({
+      selectedColor: color,
+    });
+  };
+
   render() {
-    const { handleChange, handleKeyPress, handleCreate, handleToggle, handleRemove } = this;
-    const { inputValue, schedules } = this.state;
+    const {
+      handleChange,
+      handleKeyPress,
+      handleCreate,
+      handleToggle,
+      handleRemove,
+      handleSelectColor,
+    } = this;
+    const { inputValue, schedules, colors, selectedColor } = this.state;
 
     return (
       <div className="wrap-schedule">
         <div className="top-section">
           <h2 className="title">SCHEDULE</h2>
+          <div className="colors">
+            {colors.map((color) => (
+              <div
+                key={color}
+                className="color-box"
+                style={{ background: color }}
+                onClick={() => handleSelectColor(color)}
+              ></div>
+            ))}
+          </div>
         </div>
 
         <div className="form-section">
-          <input className="input-schedule" value={inputValue} onChange={handleChange} onKeyPress={handleKeyPress} />
+          <input
+            style={{ color: selectedColor }}
+            className="input-schedule"
+            value={inputValue}
+            onChange={handleChange}
+            onKeyPress={handleKeyPress}
+          />
           <button className="create-button" onClick={handleCreate}>
             추가
           </button>
         </div>
 
         <div className="schedule-list">
-          <ScheduleList schedules={schedules} handleToggle={handleToggle} handleRemove={handleRemove} />
+          <ScheduleList
+            schedules={schedules}
+            handleToggle={handleToggle}
+            handleRemove={handleRemove}
+          />
         </div>
       </div>
     );

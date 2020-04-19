@@ -7,11 +7,7 @@ class ScheduleList extends Component {
   }
 
   render() {
-    const {
-      schedules,
-      handleToggle,
-      handleRemove,
-    } = this.props;
+    const { schedules, handleToggle, handleRemove } = this.props;
 
     const list = schedules.map((schedule) => (
       <ScheduleItem
