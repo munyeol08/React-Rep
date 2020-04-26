@@ -71,8 +71,8 @@ body {
   height: 309px; }
 
 .wrap-schedule .schedule-list .list-remove {
-  margin-right: 13px;
-  font-size: 16px;
+  margin-right: 7px;
+  font-size: 17px;
   font-weight: 800;
   color: #22b8cf; }
 
@@ -95,16 +95,26 @@ body {
   font-size: inherit;
   word-break: break-all; }
 
+.wrap-schedule .schedule-list .list-item .list-contents .list-modify-input {
+  color: inherit;
+  width: 100%;
+  outline: none;
+  padding: 2px; }
+
 .wrap-schedule .schedule-list .list-item .check-mark {
   line-height: 1rem;
   margin-left: 1rem;
-  color: #3bc9db;
-  font-size: 14px;
-  font-weight: 800; }
-
-.wrap-schedule .schedule-list .list-item .checked {
   color: #adb5bd;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 10px; }
+
+.wrap-schedule .schedule-list .list-item.checked .list-contents {
+  color: #adb5bd !important;
   text-decoration: line-through; }
+
+.wrap-schedule .schedule-list .list-item.checked .check-mark {
+  color: #22b8cf; }
 
 ::-webkit-scrollbar {
   width: 6px;

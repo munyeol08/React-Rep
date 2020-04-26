@@ -1,51 +1,75 @@
 import React, { Component } from 'react';
-import { ContextMenu, MenuItem, ContextMenuTrigger } from 'react-contextmenu';
-import '../CSS/ContextMenu.css';
 
 class ScheduleItem extends Component {
+  state = {
+    inputValue: this.props.schedule.contents,
+  };
+
   shouldComponentUpdate(nextProps, nextState) {
-    return this.props.schedule !== nextProps.schedule;
+    return this.props.schedule.modify || this.props !== nextProps;
   }
 
-  handleClick = (data) => {
-    console.log(data.type);
+  handleChange = (e) => {
+    this.setState({
+      inputValue: e.target.value,
+    });
+  };
+
+  handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.props.onModifyToggle(this.props.schedule.id, this.state.inputValue);
+    }
   };
 
   render() {
-    const { schedule, onToggle, onRemove } = this.props;
-    const { id, contents, color, checked } = schedule;
-
+    const { inputValue } = this.state;
+    const { handleChange, handleKeyPress } = this;
+    const { schedule, onToggle, onRemove, onModifyToggle } = this.props;
+    const { id, contents, color, checked, modify } = schedule;
     return (
-      <div>
-        <ContextMenuTrigger id="contextMenu">
-          <div key={id} className="list-item" onClick={() => onToggle(id)}>
-            <div
-              className="list-remove"
-              onClick={(e) => {
-                e.stopPropagation();
-                onRemove(id);
-              }}
-            >
-              &times;
-            </div>
-            <div className="list-contents" style={{ color: color }}>
-              {contents}
-            </div>
-            {checked && <div className="check-mark">&#x2713;</div>}
-          </div>
-        </ContextMenuTrigger>
-
-        <ContextMenu id="contextMenu">
-          <MenuItem data={{ type: 'modify' }} onClick={this.handleClick}>
-            수정
-          </MenuItem>
-          <MenuItem data={{ type: 'delete' }} onClick={this.handleClick}>
-            삭제
-          </MenuItem>
-          <MenuItem data={{ type: 'colorChange' }} onClick={this.handleClick}>
-            색상변경
-          </MenuItem>
-        </ContextMenu>
+      <div
+        key={id}
+        className={'list-item' + (checked ? ' checked' : '')}
+        onDoubleClick={(e) => {
+          if (checked) {
+            return;
+          }
+          e.stopPropagation();
+          onModifyToggle(id, inputValue);
+        }}
+      >
+        <div
+          className="list-remove"
+          onClick={(e) => {
+            e.stopPropagation();
+            onRemove(id);
+          }}
+        >
+          &times;
+        </div>
+        <div className="list-contents" style={{ color: color }}>
+          {modify ? (
+            <input
+              onKeyPress={handleKeyPress}
+              onChange={handleChange}
+              value={inputValue}
+              className="list-modify-input"
+            />
+          ) : (
+            contents
+          )}
+        </div>
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            if (!modify) {
+              onToggle(id);
+            }
+          }}
+          className="check-mark"
+        >
+          &#x2713;
+        </div>
       </div>
     );
   }

@@ -9,24 +9,28 @@ class Schedule extends Component {
 
   state = {
     inputValue: '',
+    modifyValue: '',
     schedules: [
       {
         id: 1,
         contents: '리액트 공부',
         color: '#000',
         checked: true,
+        modify: false,
       },
       {
         id: 2,
         contents: '자바스립트 심화',
         color: '#8A2BE2',
         checked: false,
+        modify: false,
       },
       {
         id: 3,
         contents: 'Webpack, Babel',
         color: '#7FFF00',
         checked: false,
+        modify: false,
       },
     ],
     colors: ['#000', '#7FFF00', '#8A2BE2', '#FF0000'],
@@ -98,6 +102,30 @@ class Schedule extends Component {
     });
   };
 
+  handleModifyToggle = (id, contents) => {
+    const { schedules } = this.state;
+    const index = schedules.findIndex((schedule) => schedule.id === id);
+    const selected = schedules[index];
+    const nextSchedule = [...schedules];
+
+    nextSchedule[index] = {
+      ...selected,
+      contents: contents,
+      modify: !selected.modify,
+    };
+
+    this.setState({
+      schedules: nextSchedule,
+    });
+  };
+
+  // handleModifyChange = (id, contents) => {
+  //   const { schedules } = this.state;
+  //   this.setState({
+  //     schedules: schedules.map(schedule => schedule.id === id ? ) ,
+  //   });
+  // };
+
   handleSelectColor = (color) => {
     this.setState({
       selectedColor: color,
@@ -112,8 +140,16 @@ class Schedule extends Component {
       handleToggle,
       handleRemove,
       handleSelectColor,
+      handleModifyToggle,
+      handleModifyChange,
     } = this;
-    const { inputValue, schedules, colors, selectedColor } = this.state;
+    const {
+      inputValue,
+      modifyValue,
+      schedules,
+      colors,
+      selectedColor,
+    } = this.state;
 
     return (
       <div className="wrap-schedule">
@@ -147,8 +183,11 @@ class Schedule extends Component {
         <div className="schedule-list">
           <ScheduleList
             schedules={schedules}
+            modifyValue={modifyValue}
             handleToggle={handleToggle}
             handleRemove={handleRemove}
+            handleModifyToggle={handleModifyToggle}
+            handleModifyChange={handleModifyChange}
           />
         </div>
       </div>

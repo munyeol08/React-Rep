@@ -77,8 +77,8 @@ body {
     height: 309px;
 
     .list-remove {
-      margin-right: 13px;
-      font-size: 16px;
+      margin-right: 7px;
+      font-size: 17px;
       font-weight: 800;
       color: $mainColor;
     }
@@ -101,17 +101,30 @@ body {
         flex: 1;
         font-size: inherit;
         word-break: break-all;
+
+        .list-modify-input {
+          color: inherit;
+          width: 100%;
+          outline: none;
+          padding: 2px;
+        }
       }
       .check-mark {
         line-height: 1rem;
         margin-left: 1rem;
-        color: #3bc9db;
+        color: #adb5bd;
         font-size: 14px;
         font-weight: 800;
+        padding: 10px;
       }
-      .checked {
-        color: #adb5bd;
+    }
+    .list-item.checked {
+      .list-contents {
+        color: #adb5bd !important;
         text-decoration: line-through;
+      }
+      .check-mark {
+        color: $mainColor;
       }
     }
   }

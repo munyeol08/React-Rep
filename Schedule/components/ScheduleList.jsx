@@ -3,18 +3,26 @@ import ScheduleItem from './ScheduleItem';
 
 class ScheduleList extends Component {
   shouldComponentUpdate(nextProps, nextState) {
-    return this.props.schedules !== nextProps.schedules;
+    return this.props !== nextProps;
   }
 
   render() {
-    const { schedules, handleToggle, handleRemove } = this.props;
+    const {
+      schedules,
+      handleToggle,
+      handleRemove,
+      handleModifyToggle,
+      handleModifyChange,
+    } = this.props;
 
     const list = schedules.map((schedule) => (
       <ScheduleItem
-        schedule={schedule}
         key={schedule.id}
+        schedule={schedule}
         onToggle={handleToggle}
         onRemove={handleRemove}
+        onModifyToggle={handleModifyToggle}
+        onModifyChange={handleModifyChange}
       />
     ));
 
